@@ -106,13 +106,9 @@ function Library:CreateMain()
         ButtonsText.TextColor3 = Color3.new(1, 1, 1)
         ButtonsText.TextSize = 20
         ButtonsText.TextStrokeColor3 = Color3.new(1, 1, 1)
-        ButtonsText.Text = text
+        ButtonsText.Text = name
     end
     return EpicLibrary;
 end
 
 return Library;
-
-local main = Library:CreateWindow("Epic")
-
-main:CreateButton("yay")
