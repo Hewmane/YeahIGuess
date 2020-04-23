@@ -1,0 +1,118 @@
+local Library = {}
+
+function Library:CreateMain()
+    local Design = Instance.new("ScreenGui")
+    local TopMain = Instance.new("Frame")
+    local Base = Instance.new("Frame")
+    local Container = Instance.new("Frame")
+    local ButtonsText = Instance.new("TextButton")
+    local UIGridLayout = Instance.new("UIGridLayout")
+
+    Title.Name = "Title"
+    Title.Parent = TopMain
+    Title.BackgroundColor3 = Color3.new(1, 1, 1)
+    Title.BackgroundTransparency = 1
+    Title.BorderSizePixel = 0
+    Title.Position = UDim2.new(0.359337538, 0, 0, 0)
+    Title.Size = UDim2.new(0, 160, 0, 36)
+    Title.Font = Enum.Font.SourceSansLight
+    Title.TextColor3 = Color3.new(1, 1, 1)
+    Title.TextSize = 20
+    Title.TextWrapped = true
+    Title.Text = "Gay"
+
+    Design.Name = "Design"
+    Design.Parent = game.CoreGui
+
+    TopMain.Name = "TopMain"
+    TopMain.Parent = Design
+    TopMain.BackgroundColor3 = Color3.new(0.0784314, 0.0784314, 0.0784314)
+    TopMain.BorderSizePixel = 0
+    TopMain.Position = UDim2.new(0.376690269, 0, 0.328389823, 0)
+    TopMain.Selectable = true
+    TopMain.Size = UDim2.new(0, 568, 0, 36)
+    TopMain.Draggable = true
+    local UserInputService = game:GetService("UserInputService")
+
+    local gui = game.CoreGui.Design.TopMain
+
+    local dragging
+    local dragInput
+    local dragStart
+    local startPos
+
+    local function update(input)
+        local delta = input.Position - dragStart
+        gui.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+    end
+
+    gui.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            dragging = true
+            dragStart = input.Position
+            startPos = gui.Position
+            
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then
+                    dragging = false
+                end
+            end)
+        end
+    end)
+
+    gui.InputChanged:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+            dragInput = input
+        end
+    end)
+
+    UserInputService.InputChanged:Connect(function(input)
+        if input == dragInput and dragging then
+            update(input)
+        end
+    end)
+
+    Base.Name = "Base"
+    Base.Parent = TopMain
+    Base.BackgroundColor3 = Color3.new(0.156863, 0.156863, 0.156863)
+    Base.Position = UDim2.new(0, 0, 0.999899983, 0)
+    Base.Size = UDim2.new(0, 568, 0, 259)
+
+    Container.Name = "Container"
+    Container.Parent = Base
+    Container.BackgroundColor3 = Color3.new(0.156863, 0.156863, 0.156863)
+    Container.BorderSizePixel = 0
+    Container.Position = UDim2.new(0.0645012408, 0, 0.0540540516, 0)
+    Container.Size = UDim2.new(0, 493, 0, 228)
+
+    UIGridLayout.Parent = Container
+    UIGridLayout.FillDirection = Enum.FillDirection.Vertical
+    UIGridLayout.SortOrder = Enum.SortOrder.LayoutOrder
+    UIGridLayout.CellSize = UDim2.new(0, 100, 0, 50)
+
+    local EpicLibrary = {}
+
+    function EpicLibrary:NewButton(name)
+        local ButtonsText = Instance.new("TextButton")
+
+        ButtonsText.Name = "Button'sText"
+        ButtonsText.Parent = Container
+        ButtonsText.BackgroundColor3 = Color3.new(0.117647, 0.117647, 0.117647)
+        ButtonsText.BorderSizePixel = 0
+        ButtonsText.Position = UDim2.new(-0.00077213347, 0, -0.00390246511, 0)
+        ButtonsText.Size = UDim2.new(0, 127, 0, 50)
+        ButtonsText.Style = Enum.ButtonStyle.RobloxButton
+        ButtonsText.Font = Enum.Font.SourceSans
+        ButtonsText.TextColor3 = Color3.new(1, 1, 1)
+        ButtonsText.TextSize = 20
+        ButtonsText.TextStrokeColor3 = Color3.new(1, 1, 1)
+        ButtonsText.Text = text
+    end
+    return EpicLibrary;
+end
+
+return Library;
+
+local main = Library:CreateWindow("Epic")
+
+main:CreateButton("yay")
